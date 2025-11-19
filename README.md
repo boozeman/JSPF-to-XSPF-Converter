@@ -32,7 +32,6 @@ docker compose up playlist-converter -d
 - Press Transfer to Tidal
 - Press Complete
 - PROFIT!
-- Upload file
 
 
 # DISCLAIMER 
