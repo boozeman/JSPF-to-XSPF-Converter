@@ -24,7 +24,7 @@ docker compose up playlist-converter -d
 - Go to your listenbrains.org Created for you page
 - Select Weekly Jams or Weekly Exploration
 - Use that cog to export playlist as jspf
-- Use this converter to convert jspf to xfpf (file generated ad user Downloads dir on Windows named playlist.xfpf
+- Use this converter to convert jspf to xfpf (file generated at user Downloads dir on Windows and named playlist.xfpf)
 - Go to your Tidal playlists and press that ... -> Transfer your music
 - Approve and Connect
 - Upload file
@@ -36,4 +36,4 @@ docker compose up playlist-converter -d
 
 # DISCLAIMER 
 
-Real Lights Warranty is on!
+Rear Lights Warranty is on!
