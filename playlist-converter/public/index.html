@@ -90,10 +90,22 @@
 
     let selectedFile = null;
 
+    // Initialize theme from localStorage
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+      dropzone.classList.add("dark");
+    }
+
     // Theme toggle
     themeToggle.addEventListener("click", () => {
       document.body.classList.toggle("dark");
       dropzone.classList.toggle("dark");
+
+      if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+      } else {
+        localStorage.setItem("theme", "light");
+      }
     });
 
     // Clicking dropzone triggers file dialog
