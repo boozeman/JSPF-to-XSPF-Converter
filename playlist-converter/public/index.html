@@ -8,42 +8,54 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Heroicons -->
-  <script src="https://unpkg.com/heroicons@2.0.16/outline/index.js"></script>
-
   <style>
-    /* Soft neumorphic background */
     body {
-      background: #eef1f5;
+      transition: background 0.3s, color 0.3s;
     }
-
     .soft-card {
       background: #eef1f5;
-      box-shadow:
-        8px 8px 16px #c8ccd1,
-        -8px -8px 16px #ffffff;
+      box-shadow: 8px 8px 16px #c8ccd1, -8px -8px 16px #ffffff;
+      transition: background 0.3s, box-shadow 0.3s;
     }
-
     .soft-card-pressed {
-      box-shadow:
-        inset 4px 4px 8px #c8ccd1,
-        inset -4px -4px 8px #ffffff;
+      box-shadow: inset 4px 4px 8px #c8ccd1, inset -4px -4px 8px #ffffff;
+    }
+    /* Dark mode */
+    body.dark {
+      background: #1f2937;
+      color: #e5e7eb;
+    }
+    body.dark .soft-card {
+      background: #2a2e3c;
+      box-shadow: 8px 8px 16px #1a1c24, -8px -8px 16px #383b46;
+    }
+    .dropzone {
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .dropzone.dark {
+      border-color: #4b5563;
+      color: #e5e7eb;
     }
   </style>
 </head>
 
 <body class="min-h-screen flex items-center justify-center p-6">
 
-  <div class="soft-card rounded-3xl p-10 w-full max-w-xl transition-all">
+  <div class="soft-card rounded-3xl p-10 w-full max-w-xl">
+
+    <!-- Dark/Light toggle -->
+    <div class="flex justify-end mb-4">
+      <button id="themeToggle" class="px-3 py-1 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition">
+        Dark / Light
+      </button>
+    </div>
 
     <h1 class="text-3xl font-semibold mb-6 text-center">
-      <span class="text-indigo-600">JSPF</span> → XSPF Converter
+      JSPF → XSPF Converter
     </h1>
 
     <!-- Dropzone -->
-    <div id="dropzone"
-         class="rounded-2xl border-2 border-dashed border-gray-400 p-10 text-center cursor-pointer transition-all hover:border-indigo-500 hover:bg-white">
-
+    <div id="dropzone" class="dropzone rounded-2xl border-2 border-dashed border-gray-400 p-10 text-center cursor-pointer hover:border-indigo-500 hover:bg-white">
       <svg xmlns="http://www.w3.org/2000/svg"
            class="h-12 w-12 mx-auto text-gray-500 mb-3"
            fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,13 +86,20 @@
     const fileInput = document.getElementById("fileInput");
     const convertBtn = document.getElementById("convertBtn");
     const statusEl = document.getElementById("status");
+    const themeToggle = document.getElementById("themeToggle");
 
     let selectedFile = null;
 
-    // clicking dropzone triggers file dialog
+    // Theme toggle
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      dropzone.classList.toggle("dark");
+    });
+
+    // Clicking dropzone triggers file dialog
     dropzone.addEventListener('click', () => fileInput.click());
 
-    // drag-over highlight
+    // Drag-over highlight
     dropzone.addEventListener('dragover', (e) => {
       e.preventDefault();
       dropzone.classList.add("bg-white", "border-indigo-600");
@@ -90,7 +109,7 @@
       dropzone.classList.remove("bg-white", "border-indigo-600");
     });
 
-    // drop file
+    // Drop file
     dropzone.addEventListener('drop', (e) => {
       e.preventDefault();
       dropzone.classList.remove("bg-white", "border-indigo-600");
@@ -102,7 +121,7 @@
       }
     });
 
-    // file chosen via dialog
+    // File chosen via dialog
     fileInput.addEventListener('change', () => {
       if (fileInput.files.length) {
         selectedFile = fileInput.files[0];
@@ -113,9 +132,9 @@
 
     function dropzoneText(filename) {
       dropzone.innerHTML = `
-        <p class="text-gray-700 text-lg font-medium">Selected:</p>
+        <p class="text-gray-700 dark:text-gray-200 text-lg font-medium">Selected:</p>
         <p class="text-indigo-600 mt-1">${filename}</p>
-        <p class="text-gray-400 text-sm mt-1">(click to change)</p>
+        <p class="text-gray-400 dark:text-gray-400 text-sm mt-1">(click to change)</p>
       `;
     }
 
@@ -143,7 +162,6 @@
         a.remove();
 
         statusEl.innerText = "Done!";
-
       } catch (err) {
         statusEl.innerText = "Error: " + err;
       }
