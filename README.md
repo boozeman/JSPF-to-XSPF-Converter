@@ -5,6 +5,7 @@ Simple Listenbrainz.org jspf playlist converter for Tidal XSPF Playlists made wi
 
 * Converts JSPF to XFPF with the same name as original
 * Simplify Playlist Title to Weekly Exploration 2026-04-06 or Weekly Jams 2026-04-06
+* The Title of other lists remains original eq. 'LB Radio for tags progressive metal, progessive on hard mode'
 
 # Setup
 
@@ -23,9 +24,9 @@ docker compose up playlist-converter -d
 # Usage
 
 - Go to your listenbrains.org Created for you page
-- Select Weekly Jams or Weekly Exploration
-- Use that cog to export playlist as jspf
-- Use this converter to convert jspf to xspf (file generated at user Downloads dir on Windows and named playlist.xspf)
+- Select Weekly Jams or Weekly Exploration / Use LB https://listenbrainz.org/explore/lb-radio/ Radio with your options
+- Use that cog to export playlist as jspf / Options > Export as JSPF
+- Use this converter to convert jspf to xspf (file generated at user Downloads dir on Windows with original name)
 - Go to your Tidal playlists and press that ... -> Transfer your music
 - Approve and Connect
 - Upload file
