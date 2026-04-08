@@ -26,11 +26,10 @@ docker compose up playlist-converter -d
 - Go to your listenbrains.org Created for you page
 - Select Weekly Jams or Weekly Exploration / Use LB https://listenbrainz.org/explore/lb-radio/ Radio with your options
 - Use that cog to export playlist as jspf / Options > Export as JSPF
-- Use this converter to convert jspf to xspf (file generated at user Downloads dir on Windows with original name)
+- Use this converter (http://your_hostname:3003) to convert jspf to xspf (File generated to user Downloads dir with original name)
 - Go to your Tidal playlists and press that ... -> Transfer your music
 - Approve and Connect
-- Upload file
-- Select playlist.xspf
+- Drop / Select your xspf-file
 - Press Transfer to Tidal
 - Press Complete
 - PROFIT!
