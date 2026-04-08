@@ -11,6 +11,7 @@ import argparse
 import json
 import sys
 import xml.etree.ElementTree as ET
+import re
 
 XSPF_NS = "http://xspf.org/ns/0/"
 
@@ -19,6 +20,23 @@ def safe_text(parent, tag, text):
         return
     el = ET.SubElement(parent, tag)
     el.text = str(text)
+
+def normalize_title(title):
+    if not isinstance(title, str):
+        return title
+
+    try:
+        # Korvaa koko "for käyttäjä, week of" -osa pois
+        title = re.sub(
+            r'^(Weekly (?:Exploration|Jams)) for .*?, week of (\d{4}-\d{2}-\d{2} \w+)',
+            r'\1 \2',
+            title
+        )
+        return title
+
+    except Exception as e:
+        print(f"Title normalization error: {e}", file=sys.stderr)
+        return title
 
 def jspf_to_xspf(jspf):
     # Accept either top-level playlist object, or raw list/object variations.
@@ -33,7 +51,10 @@ def jspf_to_xspf(jspf):
     if isinstance(pl, dict):
         for key in ('title', 'creator', 'annotation', 'info', 'location'):
             if key in pl and pl[key] is not None:
-                safe_text(playlist, key, pl[key])
+                value = pl[key]
+            if key == 'title':
+                value = normalize_title(value)
+            safe_text(playlist, key, value)
 
     tracklist = ET.SubElement(playlist, f"{{{XSPF_NS}}}trackList")
 
