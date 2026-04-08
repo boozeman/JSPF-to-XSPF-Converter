@@ -26,9 +26,9 @@ def normalize_title(title):
         return title
 
     try:
-        # Korvaa koko "for käyttäjä, week of" -osa pois
+        # Korvaa koko "for käyttäjä, week of" -osa pois ja siivoa lopusta Mon
         title = re.sub(
-            r'^(Weekly (?:Exploration|Jams)) for .*?, week of (\d{4}-\d{2}-\d{2} \w+)',
+            r'^(Weekly (?:Exploration|Jams)) for .*?, week of (\d{4}-\d{2}-\d{2}) \w+',
             r'\1 \2',
             title
         )

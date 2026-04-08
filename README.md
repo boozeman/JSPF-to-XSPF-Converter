@@ -4,7 +4,7 @@ Simple Listenbrainz.org jspf playlist converter for Tidal XSPF Playlists made wi
 # Features
 
 * Converts JSPF to XFPF with the same name as original
-* Simplify Playlist Title to Weekly Exploration 2026-04-06 Mon or Weekly Jams 2026-04-06 Mon
+* Simplify Playlist Title to Weekly Exploration 2026-04-06 or Weekly Jams 2026-04-06
 
 # Setup
 
