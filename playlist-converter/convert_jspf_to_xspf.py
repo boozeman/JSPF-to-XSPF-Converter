@@ -26,9 +26,8 @@ def normalize_title(title):
         return title
 
     try:
-        # Korvaa koko "for käyttäjä, week of" -osa pois ja siivoa lopusta Mon
         title = re.sub(
-            r'^(Weekly (?:Exploration|Jams)) for .*?, week of (\d{4}-\d{2}-\d{2}) \w+',
+            r'^((?:Daily|Weekly) (?:Exploration|Jams)) for .*?, (?:week of )?(\d{4}-\d{2}-\d{2})(?: \w+)?',
             r'\1 \2',
             title
         )
@@ -78,6 +77,18 @@ def jspf_to_xspf(jspf):
         safe_text(track_el, f"{{{XSPF_NS}}}album", t.get('album') or t.get('albumTitle'))
         # location often is 'location' or 'uri'
         loc = t.get('location') or t.get('uri') or t.get('file') or t.get('url')
+
+        # Muunnetaan TIDAL URL → tidal:track:ID
+        if isinstance(loc, str) and "tidal.com/browse/track/" in loc:
+            try:
+                track_id = loc.rstrip('/').split('/')[-1]
+                loc = f"tidal:track:{track_id}"
+            except Exception:
+                pass  # fallback alkuperäiseen jos jotain menee pieleen
+
+        safe_text(track_el, f"{{{XSPF_NS}}}location", loc)
+
+        #loc = t.get('location') or t.get('uri') or t.get('file') or t.get('url')
         safe_text(track_el, f"{{{XSPF_NS}}}location", loc)
         # duration: ensure an integer (milliseconds) if present
         dur = t.get('duration')
